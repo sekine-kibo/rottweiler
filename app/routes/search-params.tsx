@@ -20,7 +20,7 @@ export default function Index() {
 
   return (
     <div className='flex h-screen flex-col items-center bg-blue-400 p-5'>
-      <h1 className='text-4xl font-bold'>this is _index.tsx</h1>
+      <h1 className='text-4xl font-bold'>this is search-params.tsx</h1>
       <p className='text-xl '>{count}</p>
       <Button onClick={increment}>+</Button>
       <Button onClick={navigateWithSearchParams}>

@@ -60,7 +60,7 @@ export default function App() {
         <h1 className='text-4xl font-bold'>this is root.tsx</h1>
         <p>保持している状態</p>
         <p>Box Code: {config.boxCode}</p>
-        <p>残高: {config.boxCode}</p>
+        <p>残高: {config.balance}</p>
         <br />
         <ul>
           {config.links.map(link => (
