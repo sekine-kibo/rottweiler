@@ -1,5 +1,5 @@
-import { Await, defer, useLoaderData } from '@remix-run/react'
-import { Suspense } from 'react'
+import { Await, defer, useAsyncError, useLoaderData } from '@remix-run/react'
+import { Suspense, useEffect } from 'react'
 
 type Post = {
   userId: number
@@ -17,6 +17,7 @@ interface User {
 
 async function fetchPosts() {
   await new Promise(resolve => setTimeout(resolve, 3000))
+  // throw new Error('error が発生しました')
   return await fetch('https://jsonplaceholder.typicode.com/posts').then(
     res => res.json() as Promise<Post[]>
   )
@@ -34,14 +35,22 @@ export async function loader() {
   return defer({ posts: posts, users: users })
 }
 
+function ErrorElement() {
+  const error = useAsyncError() as Error
+  return <p>Uh Oh, something went wrong! {error.message}</p>
+}
+
 export default function Index() {
   const { posts, users } = useLoaderData<typeof loader>()
+
   return (
     <div className='flex h-screen flex-col items-center bg-blue-600 p-5'>
       <h1 className='text-4xl font-bold'>this is streaming.tsx</h1>
       <div className='w-5/3 flex '>
         <Suspense fallback={<p>loading ...</p>}>
-          <Await resolve={posts}>{posts => <PostList posts={posts} />}</Await>
+          <Await resolve={posts} errorElement={<ErrorElement />}>
+            {posts => <PostList posts={posts} />}
+          </Await>
         </Suspense>
         <UserList users={users} />
       </div>
