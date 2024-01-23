@@ -1,5 +1,5 @@
 import { Await, defer, useAsyncError, useLoaderData } from '@remix-run/react'
-import { Suspense, useEffect } from 'react'
+import { Suspense } from 'react'
 
 type Post = {
   userId: number
